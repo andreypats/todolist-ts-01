@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoList, {TaskType} from "./TodoList";
+import TodoList, {TaskType} from "./Todolist";
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
+import {AppBar, Button, Container, Grid, IconButton, Menu, Typography, Toolbar} from "@material-ui/core";
 
 // CRUD
 // create +
@@ -68,10 +69,10 @@ function App() {
     }
 
     const changeTodoListFilter = (filter: FilterValuesType, todoListID: string) => {
-        setTodoLists(todoLists.map(tl => tl.id != todoListID ? tl : {...tl, filter: filter}))
+        setTodoLists(todoLists.map(tl => tl.id !== todoListID ? tl : {...tl, filter: filter}))
     }
     const changeTodoListTitle = (title: string, todoListID: string) => {
-        setTodoLists(todoLists.map(tl => tl.id != todoListID ? tl : {...tl, title: title}))
+        setTodoLists(todoLists.map(tl => tl.id !== todoListID ? tl : {...tl, title: title}))
     }
     const removeTodoList = (todoListID: string) => {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
@@ -122,8 +123,25 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodoList} errorColor={"blue"}/>
-            {todoListComponents}
+            {/*<AppBar position="static">*/}
+            {/*    <Toolbar style={{justifyContent: "space-between"}}>*/}
+            {/*        <IconButton edge="start" color="inherit" aria-label="menu">*/}
+            {/*            <Menu open/>*/}
+            {/*        </IconButton>*/}
+            {/*        <Typography variant="h6">*/}
+            {/*            Todolist*/}
+            {/*        </Typography>*/}
+            {/*        <Button color="inherit" variant={"outlined"}>Logout</Button>*/}
+            {/*    </Toolbar>*/}
+            {/*</AppBar>*/}
+            <Container fixed>
+                <Grid>
+                    <AddItemForm addItem={addTodoList} errorColor={"blue"}/>
+                </Grid>
+                <Grid>
+                    {todoListComponents}
+                </Grid>
+            </Container>
         </div>
     );
 }
