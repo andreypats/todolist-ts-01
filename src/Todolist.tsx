@@ -3,7 +3,7 @@ import {FilterValuesType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, ButtonGroup, Checkbox, IconButton} from "@material-ui/core";
-import {DeleteForever} from "@material-ui/icons";
+import {DeleteForever, DeleteOutline} from "@material-ui/icons";
 
 export type TaskType = {
     id: string
@@ -40,7 +40,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
 
             return (
 
-                <li key={task.id} className={task.isDone ? "isDone" : ""}>
+                <div key={task.id} className={task.isDone ? "isDone" : ""}>
                     <Checkbox
                         onChange={changeTaskStatus}
                         checked={task.isDone}
@@ -53,7 +53,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
                     </IconButton>
                     {/*<button onClick={() => props.removeTask(task.id, props.todoListID)}>x</button>*/}
 
-                </li>
+                </div>
             )
         })
         : <span>TaskList is empty</span>
@@ -70,12 +70,16 @@ const TodoList: FC<TodoListPropsType> = (props) => {
         <div>
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
-                <button onClick={removeTodoList}>x</button>
+                <IconButton onClick={removeTodoList} >
+                    <DeleteOutline />
+                </IconButton>
+
+                {/*<button onClick={removeTodoList}>x</button>*/}
             </h3>
             <AddItemForm addItem={addTask} errorColor={"hotpink"}/>
-            <ul>
+            <div>
                 {tasksItems}
-            </ul>
+            </div>
             <div>
                 <ButtonGroup variant='contained' size='small' disableElevation={true}>
                     <Button
@@ -84,12 +88,12 @@ const TodoList: FC<TodoListPropsType> = (props) => {
                     >All
                     </Button>
                     <Button
-                        className={props.filter === "active" ? "secondary" : "primary"}
+                        color={props.filter === "active" ? "secondary" : "primary"}
                         onClick={onClickSetFilterCreator("active")}
                     >Active
                     </Button>
                     <Button
-                        className={props.filter === "completed" ? "secondary" : "primary"}
+                        color={props.filter === "completed" ? "secondary" : "primary"}
                         onClick={onClickSetFilterCreator("completed")}
                     >Completed
                     </Button>

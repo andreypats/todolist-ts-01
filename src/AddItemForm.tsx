@@ -1,4 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
+import {IconButton, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -22,24 +24,22 @@ const AddItemForm = (props:AddItemFormPropsType) => {
         }
         setTitle("")
     }
-    const inputErrorStyles = error
-        ? {
-            border: `2px solid ${props.errorColor}`,
-            outline: 'none',
-        }
-        : {};
 
     return (
         <div>
-            <input
-                style={inputErrorStyles}
+            <TextField
+                variant={'outlined'}
+                label={'Type value'}
                 value={title}
                 onChange={onChangeSetTitle}
                 onKeyDown={onKeyDownAddTask}
-                className={error ? "error" : ""}
+                error={error}         // при помощи !! конвертируем error в булево значение
+                helperText={error && 'Title is required!'}
+                size={'small'}
             />
-            <button onClick={onClickAddItem}>+</button>
-            {error && <div style={{color: props.errorColor}}>Title is required!</div>}
+            <IconButton onClick={onClickAddItem}>
+                <AddBox color={'primary'}/>
+            </IconButton>
         </div>
     );
 };

@@ -7,21 +7,21 @@
 /*  margin-right: 50px;*/
 /*}*/
 
-.isDone {
-  color: hotpink;
-  font-weight: bold;
-  text-decoration: line-through;
-}
+/*.isDone {*/
+/*  color: hotpink;*/
+/*  font-weight: bold;*/
+/*  text-decoration: line-through;*/
+/*}*/
 
-.btn-active {
-  color: white;
-  font-weight: bold;
-  background-color: hotpink;
-  border: 2px solid hotpink;
-  border-radius: 2px;
-}
+/*.btn-active {*/
+/*  color: white;*/
+/*  font-weight: bold;*/
+/*  background-color: hotpink;*/
+/*  border: 2px solid hotpink;*/
+/*  border-radius: 2px;*/
+/*}*/
 
-.error {
-  border: 2px solid hotpink;
-  outline: none;
-}
+/*.error {*/
+/*  border: 2px solid hotpink;*/
+/*  outline: none;*/
+/*}*/
