@@ -17,13 +17,13 @@ import {Menu} from '@material-ui/icons';
 
 export type FilterValuesType = "all" | "active" | "completed"
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [todoList_ID: string]: Array<TaskType>
 }
 
@@ -89,26 +89,29 @@ function App() {
     }
 
     //UI:
-    const todoListComponents = todoLists.map(tl => {
-        let tasksForRender;
-        switch (tl.filter) {
+    const getTasksForRender = (todoList: TodoListType, tasks: TaskStateType) => {
+        let tasksForRender: Array<TaskType>;
+        switch (todoList.filter) {
             case "completed":
-                tasksForRender = tasks[tl.id].filter(task => task.isDone)
+                tasksForRender = tasks[todoList.id].filter(task => task.isDone)
                 break
             case "active":
-                tasksForRender = tasks[tl.id].filter(task => !task.isDone)
+                tasksForRender = tasks[todoList.id].filter(task => !task.isDone)
                 break
             default:
-                tasksForRender = tasks[tl.id]
+                tasksForRender = tasks[todoList.id]
         }
+        return tasksForRender
+    }
 
+    const todoListComponents = todoLists.map(tl => {
         return (
             <Grid item>
                 <Paper style={{padding: '10px'}}>
                     <TodoList
                         todoListID={tl.id}
                         title={tl.title}
-                        tasks={tasksForRender}
+                        tasks={getTasksForRender(tl, tasks)}
                         filter={tl.filter}
                         removeTodoList={removeTodoList}
                         removeTask={removeTask}
