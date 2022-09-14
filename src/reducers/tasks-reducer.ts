@@ -10,43 +10,43 @@ type ChangeTaskTitleActionAT = ReturnType<typeof changeTaskTitleAC>
 
 export type ActionType = RemoveTaskActionAT | AddTaskActionAT | ChangeTaskStatusActionAT | ChangeTaskTitleActionAT | AddTodoListAT | RemoveTodolistAT
 
-export const tasksReducer = (state: TaskStateType, action: ActionType) => {
+export const tasksReducer = (tasks: TaskStateType, action: ActionType) => {
     switch (action.type) {
         case "REMOVE-TASK":
             return {
-                ...state,
-                [action.todolistId]: state[action.todolistId].filter(task=>task.id !== action.taskId)
+                ...tasks,
+                [action.todolistId]: tasks[action.todolistId].filter(task=>task.id !== action.taskId)
             }
         case "ADD-TASK":
             return {
-                ...state,
-                [action.todolistId]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistId]]
+                ...tasks,
+                [action.todolistId]: [{id: v1(), title: action.title, isDone: false}, ...tasks[action.todolistId]]
             }
         case "CHANGE-TASK-STATUS":
             return {
-                ...state,
-                [action.todolistId]: state[action.todolistId]
+                ...tasks,
+                [action.todolistId]: tasks[action.todolistId]
                     .map(task => task.id === action.taskId ? {...task, isDone: action.isDone}: task)
         }
         case "CHANGE-TASK-TITLE":
             return {
-                ...state,
-                [action.todolistId]: state[action.todolistId]
+                ...tasks,
+                [action.todolistId]: tasks[action.todolistId]
                     .map(task => task.id === action.taskId ? {...task, title: action.title}: task)
             }
         case "ADD-TODOLIST":
             return {
-                ...state,
+                ...tasks,
                 [action.todolistId]:[]
             }
         case "REMOVE-TODOLIST":
-            let copyState = {...state}
+            let copyState = {...tasks}
             delete copyState[action.id]
             return copyState
             // const {[action.id]: [],...rest} = {...state}   // - деструктуризация
             // return rest
         default:
-            return state
+            return tasks
     }
 }
 
