@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
-import {Button, Checkbox, IconButton} from '@material-ui/core';
+import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import {Task} from "./state/Task";
+import {TaskWithRedux} from "./TaskWithRedux";
 
 export type TaskType = {
     id: string
@@ -42,14 +42,6 @@ export const Todolist = React.memo ((props: PropsType) => {
     const onActiveClickHandler = () => props.changeFilter("active", props.id);
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
-    const removeTask = useCallback( (taskId: string) => props.removeTask(taskId, props.id),[props.removeTask, props.id])
-    const changeTaskStatus = useCallback((taskId: string, status: boolean) => {
-        props.changeTaskStatus(taskId, status, props.id)
-    },[props.changeTaskStatus, props.id])
-    const changeTaskTitle = useCallback((taskId: string, title: string) => {
-        props.changeTaskTitle(taskId, title, props.id);
-    },[props.changeTaskTitle, props.id])
-
     return <div>
         <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle} />
             <IconButton onClick={removeTodolist}>
@@ -60,12 +52,10 @@ export const Todolist = React.memo ((props: PropsType) => {
         <div>
             {
                 props.tasks.map(t => {
-                    return <Task
+                    return <TaskWithRedux
                         key={t.id}
                         task={t}
-                        removeTask = {removeTask}
-                        changeTaskStatus = {changeTaskStatus}
-                        changeTaskTitle = {changeTaskTitle}
+                        todoListId={props.id}
                     />
                 })
             }
