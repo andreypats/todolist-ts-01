@@ -1,6 +1,6 @@
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
-import {Delete} from "@material-ui/icons";
+import {Delete} from "@mui/icons-material";
 import React, {ChangeEvent} from "react";
 import {TaskType} from "./Todolist";
 import {useDispatch} from "react-redux";
