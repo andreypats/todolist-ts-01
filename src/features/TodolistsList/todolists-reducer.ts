@@ -2,8 +2,26 @@ import {todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
 import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
 import {handleServerNetworkError} from '../../utils/error-utils'
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState: Array<TodolistDomainType> = []
+
+// create slice for toolkit
+const slice = createSlice({
+    name: 'todolists',
+    initialState: initialState,
+    reducers: {
+        // state - черновик state
+        removeTodolistAC (state, action: PayloadAction<{id: string}>) {
+            state.filter(tl => tl.id != action.payload.id)
+        },
+        addTodolistAC (state, action: PayloadAction<{todolist: TodolistType}>) {},
+        changeTodolistTitleAC (state, action: PayloadAction<{id: string, title: string}>) {},
+        changeTodolistFilterAC (state, action: PayloadAction<{id: string, filter: FilterValuesType}>) {},
+        changeTodolistEntityStatusAC (state, action: PayloadAction<{id: string, status: RequestStatusType}>) {},
+        setTodolistsAC (state, action: PayloadAction<{todolists: Array<TodolistType>}>) {},
+    },
+})
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
