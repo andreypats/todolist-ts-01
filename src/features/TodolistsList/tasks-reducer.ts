@@ -26,11 +26,9 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks',async (todolistI
     thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
     return {tasks, todolistId}
 })
-export const removeTaskTC = createAsyncThunk('tasks/removeTask',(param: {taskId: string, todolistId: string}) => {
-    return todolistsAPI.deleteTask(param.todolistId, param.taskId)
-        .then(() => {
-            return {taskId: param.taskId, todolistId: param.todolistId}
-        })
+export const removeTaskTC = createAsyncThunk('tasks/removeTask',async (param: {taskId: string, todolistId: string}) => {
+    await todolistsAPI.deleteTask(param.todolistId, param.taskId)
+    return {taskId: param.taskId, todolistId: param.todolistId}
 })
 
 // create slice for toolkit
@@ -151,5 +149,3 @@ export type UpdateDomainTaskModelType = {
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-
-// 1-01-40
