@@ -1,4 +1,3 @@
-import {Dispatch} from 'redux'
 import {setAppStatusAC} from '../../app/app-reducer'
 import {authAPI, FieldErrorType, LoginParamsType} from '../../api/todolists-api'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
@@ -25,6 +24,24 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, 
         return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 })
+export const logoutTC = createAsyncThunk ('auth/logout', async ({},thunkAPI)=> {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
+    try {
+        const res = await authAPI.logout()
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            return {isLoggedIn: false}
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch)
+            return thunkAPI.rejectWithValue({errors: res.data.messages})
+        }
+    } catch (err) {
+        const error: AxiosError = err as any;
+        handleServerNetworkError(error, thunkAPI.dispatch)
+        return thunkAPI.rejectWithValue({errors: [error.message]})
+    }
+
+})
 
 // create slice for toolkit
 const slice = createSlice({
@@ -40,6 +57,9 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase (loginTC.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        });
+        builder.addCase (logoutTC.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
         });
     }
@@ -64,6 +84,7 @@ export const {setIsLoggedInAC} = slice.actions;
             handleServerNetworkError(error, dispatch)
         })
 }*/
+/*
 export const logoutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.logout()
@@ -78,6 +99,4 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
-}
-
-// 1-40-00
+}*/
