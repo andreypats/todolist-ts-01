@@ -25,5 +25,3 @@ test('ids should be equals', () => {
     expect(idFromTasks).toBe(action.payload.todolist.id);
     expect(idFromTodolists).toBe(action.payload.todolist.id);
 });
-
-//3-00-00
