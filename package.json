@@ -1,8 +1,8 @@
 {
-  "name": "it-incubator-todolist-ts",
+  "name": "todolist-ts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://andreypats.github.io/it-incubator-todolist-ts-01",
+  "homepage": "https://andreypats.github.io/todolist-ts-01",
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
@@ -18,7 +18,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/uuid": "^7.0.3",
-    "axios": "^0.19.2",
+    "axios": "^1.3.5",
     "formik": "^2.1.5",
     "gh-pages": "^5.0.0",
     "react": "^16.13.1",
